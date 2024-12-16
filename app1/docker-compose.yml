@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    image: httpd:latest
+    container_name: apache-server
+    volumes:
+      - ./starship-sorades-13k:/usr/local/apache2/htdocs
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+    restart: always
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    volumes:
+      - ./starship-sorades-13k:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+    networks:
+      - webnet
+    restart: always
+
+networks:
+  webnet:
+    driver: bridge
